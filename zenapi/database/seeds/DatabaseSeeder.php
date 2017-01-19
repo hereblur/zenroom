@@ -11,6 +11,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call('UsersTableSeeder');
+      $this->roomsType();
+    }
+
+    private function roomsType(){
+      DB::table('roomtypes')->insert([ 'type' => "Small", 'inventory' => 5 ]);
+      DB::table('roomtypes')->insert([ 'type' => "Big", 'inventory' => 5 ]);
     }
 }

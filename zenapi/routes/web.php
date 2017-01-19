@@ -12,5 +12,14 @@
 */
 
 $app->get('/', function () use ($app) {
-    return $app->version();
+  return $app->version();
+});
+
+$app->group(["prefix"=>"/api"], function() use ($app) {
+  $app->get('/roomtypes', "RoomtypesController@index");
+  $app->put('/roomtypes', "RoomtypesController@create");
+  $app->post('/roomtypes/{id}', "RoomtypesController@update");
+
+  $app->get('/bookings/{month}', "BookingsController@index");
+  $app->post('/bookings/{date}/{roomtype}', "BookingsController@store");
 });
