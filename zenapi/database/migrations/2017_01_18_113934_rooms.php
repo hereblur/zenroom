@@ -13,20 +13,20 @@ class Rooms extends Migration
      */
     public function up()
     {
-      Schema::create('roomtypes', function (Blueprint $table) {
-        $table->increments('id');
-        $table->string('type')->unique();
-        $table->integer('inventory');
-        $table->timestamps();
-      });
+        Schema::create('roomtypes', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('type')->unique();
+            $table->integer('inventory');
+            $table->timestamps();
+        });
 
-      Schema::create('bookings', function (Blueprint $table) {
-        $table->increments('id');
-        $table->date('date');
-        $table->integer('roomtype');
-        $table->integer('occupied');
-        $table->timestamps();
-      });
+        Schema::create('bookings', function (Blueprint $table) {
+            $table->increments('id');
+            $table->date('date');
+            $table->integer('roomtype');
+            $table->integer('occupied');
+            $table->timestamps();
+        });
     }
 
     /**

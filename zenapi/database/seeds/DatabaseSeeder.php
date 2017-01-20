@@ -9,13 +9,14 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
-    {
-      $this->roomsType();
-    }
+     public function run()
+     {
+         $this->roomsType();
+     }
 
-    private function roomsType(){
-      DB::table('roomtypes')->insert([ 'type' => "Small", 'inventory' => 5 ]);
-      DB::table('roomtypes')->insert([ 'type' => "Big", 'inventory' => 5 ]);
+    private function roomsType()
+    {
+        DB::table('roomtypes')->insert([ 'type' => "Small", 'inventory' => 5 ]);
+        DB::table('roomtypes')->insert([ 'type' => "Big", 'inventory' => 5 ]);
     }
 }
