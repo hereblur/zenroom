@@ -93,7 +93,7 @@ class RoomtypesTest extends TestCase
             ->seeJson()
             ->seeJsonArray()
             ->seeStatusCode(200)
-            ->seeRecord(['id'=> 1, "type"=> "Triple room", "baseprice"=> "4000"]);
+            ->seeRecord(['id'=> 1, "type"=> "Triple room", "baseprice"=> "4000.00"]);
 
         $this->assertEquals(count($this->getJson()), 2);
     }
