@@ -17,6 +17,7 @@ class Rooms extends Migration
             $table->increments('id');
             $table->string('type')->unique();
             $table->integer('inventory');
+            $table->decimal('baseprice');
             $table->timestamps();
         });
 
@@ -25,6 +26,7 @@ class Rooms extends Migration
             $table->date('date');
             $table->integer('roomtype');
             $table->integer('occupied');
+            $table->decimal('price');
             $table->timestamps();
         });
     }

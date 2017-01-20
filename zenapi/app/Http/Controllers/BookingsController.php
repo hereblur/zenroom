@@ -8,16 +8,6 @@ use Illuminate\Http\Request;
 
 class BookingsController extends Controller
 {
-    private function formatResult($result)
-    {
-        return array(
-                      "date"      => $result['date'],
-                      "occupied"  => $result['occupied'],
-                      "roomtypeId"  => $result['roomtype'],
-                      "roomtypeName" => $result['type']['type']
-                    );
-    }
-
     public function index($month)
     {
         list($year, $month) = explode('-', $month);
@@ -27,11 +17,20 @@ class BookingsController extends Controller
 
 
 
-        return array_map($this->formatResult, Bookings::select("date", "occupied", "roomtype")
-            ->with('type')
-            ->whereBetween("date", [$begin, $end])
-            ->get()
-            ->toArray());
+        return array_map(function($result){
+                                return array(
+                                              "date"      => $result['date'],
+                                              "occupied"  => $result['occupied'],
+                                              "roomtypeId"  => $result['roomtype'],
+                                              "roomtypeName" => $result['type']['type']
+                                            );
+                            },
+                         Bookings::select("date", "occupied", "roomtype")
+                                ->with('type')
+                                ->whereBetween("date", [$begin, $end])
+                                ->get()
+                                ->toArray()
+                        );
     }
 
     public function store(Request $request, $date, $roomtype)

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en" ng-app="ZenApplication">
+<head>
+    <meta charset="utf-8">
+    <title>Zenroom</title>
+    <link rel="stylesheet" href="bower_components/foundation/css/normalize.css">
+    <link rel="stylesheet" href="bower_components/foundation/css/foundation.css">
+    <link rel="stylesheet" href="css/main.css?">
+</head>
+
+<body ng-controller="MainController">
+    <div class="container" ng-if="AppReady()">
+
+        <div class="row" ng-controller="BulkEditController">
+            <form name="bulkForm" class="bulk-editor">
+                Bulk Operation
+                <div class="row">
+                    <div class="small-6 medium-3 columns">
+                      <label>Room type:
+                          <SELECT ng-options="room.id as room.type for room in roomtypes" name="roomtype" ng-model="bulkFilter.roomtype"></SELECT>
+                      </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-12 medium-3 columns">
+                        <label>Select Days:</label>
+                        <div class="small-6 medium-12 columns">
+                            From: <input type="text">
+                        </div>
+                        <div class="small-6 medium-12 columns">
+                            To: <input type="text">
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <div ng-controller="CalendarController">
+
+            <div class="row calendar-header" ng-init="loadCalendar()">
+                <button  class="small-2 medium-3 columns button small" ng-click="goPrevMonth()"><span>&lt;&lt;<span class="hide-for-small-only"> PREV</span></span></button>
+                <div class="small-8 medium-6 columns button small">
+                    {{viewMonth.format('MMMM YYYY')}}
+                </div>
+                <button class="small-2 medium-3 columns button small" ng-click="goNextMonth()"><span><span class="hide-for-small-only">NEXT </span>&gt;&gt;</span>
+            </div>
+            <div  class="calendar">
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th rowspan="2" class="corner-label">Price and Availability</th>
+                                <th ng-repeat="day in calendar">{{day.label}}</th>
+                            </tr>
+                            <tr>
+                                <th >&nbsp;</th>
+                                <th ng-repeat="day in calendar">{{day.day}}</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="room in roomtypes">
+                            <tr class="roomtype-label">
+                                <th colspan="31">{{room.type}}</th>
+                                <td colspan="31">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <th class="editor-label">Availbility<br>Price</th>
+                                <td ng-repeat="day in calendar">
+                                    <room-editor day="day.date" roomtype="room.id" booking-getter="getBooking">
+                                    </room-editor>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="medium-12 large-6 columns" ng-repeat="day in calendar">
+                <day-block day="day" booking-getter="getBooking" ng-repeat="day in week" class="day-of-week columns" ></day-block>
+            </div>
+            <div></div>
+        </div>
+    </div>
+    <script src="bower_components/moment/min/moment.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/BookingsResource.js"></script>
+    <script src="js/RoomtypesResource.js"></script>
+
+    <script src="js/CalendarController.js"></script>
+    <script src="js/BulkEditController.js"></script>
+    <script src="js/RoomEditorDirective.js"></script>
+
+</body>
+</html>

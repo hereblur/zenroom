@@ -1,0 +1,87 @@
+form.bulk-editor label {
+  width: 100%;
+  position: relative;
+  z-index: 2; }
+  form.bulk-editor label input, form.bulk-editor label select {
+    background: transparent;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    padding-left: 80px;
+    z-index: 1; }
+
+.calendar-header > div {
+  text-align: center;
+  background: #baeeff;
+  color: #008CBA;
+  margin-bottom: 0px;
+  height: 3em; }
+  .calendar-header > div:hover {
+    color: #008CBA;
+    background: #baeeff;
+    cursor: default;
+    height: 2em; }
+.calendar-header button {
+  margin-bottom: 0px; }
+
+.calendar {
+  position: relative;
+  width: 100%; }
+  .calendar > div {
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: visible; }
+    .calendar > div table {
+      margin-left: 100px;
+      border: none; }
+      .calendar > div table tr th {
+        text-align: center; }
+      .calendar > div table tr th:first-child {
+        background: #eeeeee;
+        position: absolute;
+        left: 0px;
+        width: 100px;
+        text-align: right;
+        white-space: nowrap; }
+        .calendar > div table tr th:first-child.corner-label {
+          height: 4em;
+          overflow: visible;
+          z-index: 1;
+          top: 0px;
+          white-space: normal; }
+        .calendar > div table tr th:first-child.editor-label {
+          line-height: 2.2em; }
+      .calendar > div table tr.roomtype-label {
+        background: #999999; }
+        .calendar > div table tr.roomtype-label th, .calendar > div table tr.roomtype-label td {
+          background: #999999;
+          padding-left: 100px;
+          height: auto; }
+
+room-editor {
+  display: block;
+  padding: 0.1em; }
+  room-editor:hover {
+    background: #baeeff; }
+  room-editor:after {
+    content: "";
+    display: block;
+    clear: both; }
+  room-editor a {
+    display: block;
+    height: 2em;
+    padding: 2px; }
+    room-editor a:hover {
+      background: #a1e8ff; }
+    room-editor a.occupied {
+      color: #008CBA;
+      text-align: center;
+      border-bottom: 1px dashed #008CBA; }
+      room-editor a.occupied .inventory {
+        color: #999999; }
+    room-editor a.price {
+      color: red;
+      text-align: right;
+      border-bottom: 1px dashed red; }
+
+/*# sourceMappingURL=main.css.map */

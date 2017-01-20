@@ -28,18 +28,32 @@ class RoomtypesTest extends TestCase
         $this->assertEquals(count($data), 2);
         $this->assertArrayHasKey('id', $data[0]);
         $this->assertArrayHasKey('type', $data[0]);
+        $this->assertArrayHasKey('baseprice', $data[0]);
         $this->assertArrayHasKey('id', $data[1]);
         $this->assertArrayHasKey('type', $data[1]);
+        $this->assertArrayHasKey('baseprice', $data[1]);
     }
 
     public function testRoomtypeCreate()
     {
-        $this->put('/api/roomtypes', ["type" => "Big"])
+        $this->put('/api/roomtypes', ["type" => "Double room", "baseprice" => 1000])
             ->seeJson(['code'=>'409'])
             ->seeStatusCode(409);
 
-        $this->put('/api/roomtypes', ["type" => "Large"])
-            ->seeJson(['type'=>'Large'])
+        $this->put('/api/roomtypes', ["type" => "Triple room", "baseprice" => -1000])
+            ->seeJson(['code'=>'409'])
+            ->seeStatusCode(409);
+
+        $this->put('/api/roomtypes', ["type" => "Triple room", "baseprice" => 0])
+            ->seeJson(['code'=>'409'])
+            ->seeStatusCode(409);
+
+        $this->put('/api/roomtypes', ["type" => "Triple room"])
+            ->seeJson(['code'=>'409'])
+            ->seeStatusCode(409);
+
+        $this->put('/api/roomtypes', ["type" => "Triple room", "baseprice" => 1000])
+            ->seeJson(['type'=>'Triple room'])
             ->seeStatusCode(200);
 
 
@@ -55,26 +69,32 @@ class RoomtypesTest extends TestCase
 
     public function testRoomtypeUpdate()
     {
-        $this->post('/api/roomtypes/1', ["type" => "Big"])
+        $this->post('/api/roomtypes/1', ["type" => "Double room", "baseprice" => 8000])
             ->seeJson(['code'=>'409'])
             ->seeStatusCode(409);
 
-        $this->post('/api/roomtypes/1', ["type" => "Large"])
-            ->seeJson(['type'=>'Large'])
+        $this->post('/api/roomtypes/1', ["type" => "Triple room", "baseprice" => -1000])
+            ->seeJson(['code'=>'409'])
+            ->seeStatusCode(409);
+
+        $this->post('/api/roomtypes/1', ["type" => "Triple room", "baseprice" => 0])
+            ->seeJson(['code'=>'409'])
+            ->seeStatusCode(409);
+
+        $this->post('/api/roomtypes/1', ["type" => "Triple room"])
+            ->seeJson(['type'=>'Triple room'])
+            ->seeStatusCode(200);
+
+        $this->post('/api/roomtypes/1', ["baseprice" => 4000])
+            ->seeJson(['type'=>'Triple room'])
             ->seeStatusCode(200);
 
         $this->get('/api/roomtypes')
             ->seeJson()
             ->seeJsonArray()
-            ->seeStatusCode(200);
+            ->seeStatusCode(200)
+            ->seeRecord(['id'=> 1, "type"=> "Triple room", "baseprice"=> "4000"]);
 
-        $data = $this->getJson();
-
-        foreach ($data as $room) {
-            if ($room["id"] == 1) {
-                $this->assertEquals($room['type'], 'Large');
-            }
-        }
-        $this->assertEquals(count($data), 2);
+        $this->assertEquals(count($this->getJson()), 2);
     }
 }

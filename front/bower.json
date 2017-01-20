@@ -1,0 +1,26 @@
+{
+  "name": "ZenRoomFront",
+  "homepage": "https://github.com/hereblur/zenroom",
+  "authors": [
+    "supasak <blur.3rd@gmail.com>"
+  ],
+  "description": "ZenRoom",
+  "main": "index.html",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.6.1",
+    "angular-resource": "~1.6.1",
+    "moment": "~2.17.1",
+    "skeleton": "~2.0.4",
+    "foundation": "~5.5.3"
+  }
+}

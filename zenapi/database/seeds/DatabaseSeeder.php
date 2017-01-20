@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
 
     private function roomsType()
     {
-        DB::table('roomtypes')->insert([ 'type' => "Small", 'inventory' => 5 ]);
-        DB::table('roomtypes')->insert([ 'type' => "Big", 'inventory' => 5 ]);
+        DB::table('roomtypes')->insert([ 'type' => "Single room", 'inventory' => 5, 'baseprice' => 3000 ]);
+        DB::table('roomtypes')->insert([ 'type' => "Double room", 'inventory' => 5, 'baseprice' => 5000 ]);
     }
 }

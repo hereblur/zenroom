@@ -55,20 +55,20 @@ class BookingsTest extends TestCase
         $this->get('/api/bookings/'.date("Y-m"))->seeStatusCode(200);
         $this->assertEquals(3, count($this->getJson()));
 
-        $this->seeRecord(['date'=> date("Y-m-d"), "roomtypeId"=> 1, "roomtypeName"=> "Small", "occupied"=> 4]);
-        $this->seeRecord(['date'=> date("Y-m-d", strtotime("+1day")), "roomtypeId"=> 1, "roomtypeName"=> "Small", "occupied"=> 3]);
-        $this->seeRecord(['date'=> date("Y-m-d"), "roomtypeId"=> 2, "roomtypeName"=> "Big", "occupied"=> 2]);
+        $this->seeRecord(['date'=> date("Y-m-d"), "roomtypeId"=> 1, "roomtypeName"=> "Single room", "occupied"=> 4]);
+        $this->seeRecord(['date'=> date("Y-m-d", strtotime("+1day")), "roomtypeId"=> 1, "roomtypeName"=> "Single room", "occupied"=> 3]);
+        $this->seeRecord(['date'=> date("Y-m-d"), "roomtypeId"=> 2, "roomtypeName"=> "Double room", "occupied"=> 2]);
 
         $this->post('/api/bookings/'.date("Y-m-d").'/2', ["occupied" => 5])
-            ->seeJson(['occupied'=>4])
+            ->seeJson(['occupied'=>5])
             ->seeJson(['roomtype'=>2])
             ->seeStatusCode(200);
 
         $this->get('/api/bookings/'.date("Y-m"))->seeStatusCode(200);
         $this->assertEquals(3, count($this->getJson()));
 
-        $this->seeRecord(['date'=> date("Y-m-d"), "roomtypeId"=> 1, "roomtypeName"=> "Small", "occupied"=> 4]);
-        $this->seeRecord(['date'=> date("Y-m-d", strtotime("+1day")), "roomtypeId"=> 1, "roomtypeName"=> "Small", "occupied"=> 3]);
-        $this->seeRecord(['date'=> date("Y-m-d"), "roomtypeId"=> 2, "roomtypeName"=> "Big", "occupied"=> 5]);
+        $this->seeRecord(['date'=> date("Y-m-d"), "roomtypeId"=> 1, "roomtypeName"=> "Single room", "occupied"=> 4]);
+        $this->seeRecord(['date'=> date("Y-m-d", strtotime("+1day")), "roomtypeId"=> 1, "roomtypeName"=> "Single room", "occupied"=> 3]);
+        $this->seeRecord(['date'=> date("Y-m-d"), "roomtypeId"=> 2, "roomtypeName"=> "Double room", "occupied"=> 5]);
     }
 }
