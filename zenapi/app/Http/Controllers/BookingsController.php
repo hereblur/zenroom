@@ -36,8 +36,14 @@ class BookingsController extends Controller
     $occupied = $request->input("occupied");
     $roomtype = Roomtypes::find( $roomtype );
 
-    if(!$roomtype) {
+    if(!$roomtype) 
+    {
       return response()->json(['error' => 'Invalid room type.', 'code' => '500'], 500);
+    }
+
+    if($occupied < 0 || !is_integer($occupied))
+    {
+      return response()->json(['error' => "Invalid number", 'code' => '500'], 500);
     }
 
     if($roomtype->inventory < $occupied  )
@@ -48,6 +54,7 @@ class BookingsController extends Controller
     $booking = Bookings::where("date", $date)
                         ->where("roomtype", $roomtype->id)
                         ->first();
+
     if(!$booking){
       $booking = new Bookings;
       $booking->date = $date;
