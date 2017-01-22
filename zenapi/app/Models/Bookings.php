@@ -7,6 +7,6 @@ class Bookings extends Model
 {
     public function type()
     {
-        return $this->belongsTo('App\Models\RoomTypes', 'roomtype');
+        return $this->belongsTo('App\Models\Roomtypes', 'roomtype');
     }
 }

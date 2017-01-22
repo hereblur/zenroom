@@ -1,6 +1,6 @@
 
 angular.module('ZenApplication')
-.controller('CalendarController', ['$scope', 'BookingsFactory', 'Roomtypes', function($scope, BookingsFactory, Roomtypes) {
+.controller('CalendarController', ['$scope', 'BookingsFactory', 'Roomtypes', '$rootScope', function($scope, BookingsFactory, Roomtypes, $rootScope) {
     $scope.viewMonth = moment().startOf('month');
     $scope.calendar = []
 
@@ -29,19 +29,16 @@ angular.module('ZenApplication')
     }
 
     $scope.getBooking = function(date, type) {
-        var key = [date, key].join("#")
+        var key = [date, type].join("#")
         if( key in $scope.bookings ){
             return $scope.bookings[key];
         }
-
-        console.log(date, type)
-
 
         return {
             date: date,
             roomtypeId: type,
             roomtypeName: $scope.roomtypes[type].type,
-            occupied: 0,
+            inventory: $scope.roomtypes[type].inventory || 1,
             price: $scope.roomtypes[type].baseprice || 9999,
         }
     }
@@ -65,5 +62,10 @@ angular.module('ZenApplication')
         $scope.viewMonth.subtract(1, 'month');
         $scope.loadCalendar()
     }
+
+
+    $rootScope.$on("RequestCalendarRefresh", function(){
+        $scope.loadCalendar()
+    })
 
 }]);

@@ -1,0 +1,48 @@
+.calendar-header > div {
+  text-align: center;
+  background: #baeeff;
+  color: #008CBA;
+  margin-bottom: 0px; }
+  .calendar-header > div:hover {
+    color: #008CBA;
+    background: #baeeff;
+    cursor: default; }
+.calendar-header button {
+  margin-bottom: 0px; }
+
+.calendar {
+  position: relative;
+  width: 100%; }
+  .calendar > div {
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: visible; }
+    .calendar > div table {
+      margin-left: 100px;
+      border: none; }
+      .calendar > div table tr th {
+        text-align: center; }
+      .calendar > div table tr th:first-child {
+        background: #eeeeee;
+        position: absolute;
+        left: 0px;
+        width: 100px;
+        text-align: right;
+        z-index: 1;
+        white-space: nowrap; }
+        .calendar > div table tr th:first-child.corner-label {
+          height: 4em;
+          overflow: visible;
+          z-index: 2;
+          top: 0px;
+          white-space: normal; }
+        .calendar > div table tr th:first-child.editor-label {
+          line-height: 2.2em; }
+      .calendar > div table tr.roomtype-label {
+        background: #999999; }
+        .calendar > div table tr.roomtype-label th, .calendar > div table tr.roomtype-label td {
+          background: #999999;
+          padding-left: 100px;
+          height: auto; }
+
+/*# sourceMappingURL=calendar.css.map */

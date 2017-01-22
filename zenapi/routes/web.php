@@ -22,4 +22,5 @@ $app->group(["prefix"=>"/api"], function() use ($app) {
 
   $app->get('/bookings/{month}', "BookingsController@index");
   $app->post('/bookings/{date}/{roomtype}', "BookingsController@store");
+  $app->post('/bookings/bulk', "BookingsController@bulk");
 });

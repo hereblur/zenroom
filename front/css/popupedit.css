@@ -1,0 +1,72 @@
+pop-edit {
+  display: block;
+  position: relative; }
+  pop-edit a {
+    display: block;
+    height: 2em;
+    padding: 2px; }
+    pop-edit a:hover {
+      background: #a1e8ff; }
+  pop-edit.occupied a {
+    color: #008CBA;
+    text-align: center;
+    border-bottom: 1px dashed #008CBA; }
+    pop-edit.occupied a .inventory {
+      color: #999999; }
+  pop-edit.price a {
+    color: red;
+    text-align: right;
+    border-bottom: 1px dashed red; }
+  pop-edit .popup-editor {
+    display: none;
+    position: absolute;
+    top: 0px;
+    bottom: 10px;
+    left: 10px;
+    z-index: 10; }
+    pop-edit .popup-editor.active {
+      display: block; }
+    pop-edit .popup-editor .form {
+      position: relative;
+      width: 180px;
+      background: #999999;
+      vertical-align: middle;
+      padding: 5px;
+      box-shadow: 5px 5px 14px -2px #949494; }
+      pop-edit .popup-editor .form .error {
+        color: red; }
+      pop-edit .popup-editor .form .saved {
+        color: #007600; }
+      pop-edit .popup-editor .form input {
+        width: 100px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-bottom: 0; }
+      pop-edit .popup-editor .form .button {
+        display: inline-block;
+        padding: 5px;
+        vertical-align: middle;
+        margin-bottom: 0; }
+        pop-edit .popup-editor .form .button.save {
+          width: 40px;
+          border: none; }
+          pop-edit .popup-editor .form .button.save:after {
+            content: "SAVE";
+            color: white;
+            font-size: .7em; }
+          pop-edit .popup-editor .form .button.save.disabled {
+            background: gray; }
+        pop-edit .popup-editor .form .button.close {
+          width: 20px;
+          background: none;
+          border: none;
+          padding-top: 0px; }
+          pop-edit .popup-editor .form .button.close:after {
+            content: "+";
+            font-weight: bold;
+            font-size: 1.5em;
+            color: white;
+            transform: rotate(45deg);
+            display: block; }
+
+/*# sourceMappingURL=popupedit.css.map */

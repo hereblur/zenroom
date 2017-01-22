@@ -1,0 +1,12 @@
+<div>
+  <a href ng-click="popupEditor()">{{popValue}}</a>
+  <div class="popup-editor" ng-class='{"active": activate}'>
+    <div class="form">
+      <input type="text" ng-model="popValue">
+      <a href class="button save"  ng-click="save()" ng-class="{'disabled':saved}"></a>
+      <a href class="button close" ng-click="close()"></a>
+      <div class="error" ng-show="error">{{error}}</div>
+      <div class="saved" ng-show="saved">Saved!</div>
+    </div>
+  </div>
+</div>

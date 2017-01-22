@@ -25,7 +25,7 @@ class Rooms extends Migration
             $table->increments('id');
             $table->date('date');
             $table->integer('roomtype');
-            $table->integer('occupied');
+            $table->integer('inventory');
             $table->decimal('price');
             $table->timestamps();
         });

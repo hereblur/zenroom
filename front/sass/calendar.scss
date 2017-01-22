@@ -1,0 +1,72 @@
+@import "_var";
+
+.calendar-header{
+    &>div{
+        text-align: center;
+        background: lighten($blue, 50%);
+        color: $blue;
+        margin-bottom: 0px;
+        &:hover{
+            color: $blue;
+            background: lighten($blue, 50%);
+            cursor:default;
+        }
+    }
+    button{
+        margin-bottom: 0px;
+    }
+
+}
+
+.calendar{
+    position: relative;
+    width: 100%;
+
+    $fixed-column-width: 100px;
+
+    &>div{
+        width: 100%;
+        overflow-x: scroll;
+        overflow-y: visible;
+
+        table {
+            margin-left: $fixed-column-width;
+            border: none;
+            tr{
+                th{
+                    text-align: center;
+                }
+                th:first-child {
+                    background: $lightgrey;
+                    position: absolute;
+                    left: 0px;
+                    width: $fixed-column-width;
+                    text-align: right;
+                    z-index: 1;
+                    &.corner-label{
+                        height: 4em;
+                        overflow: visible;
+                        z-index: 2;
+                        top:0px;
+                        white-space: normal;;
+                    }
+                    &.editor-label{
+                        line-height: 2.2em;
+                    }
+                    white-space: nowrap;
+                }
+
+                &.roomtype-label{
+                    background: $grey;
+                    th, td{
+                        background: $grey;
+                        padding-left: $fixed-column-width;
+                        height: auto;
+                    }
+
+                }
+
+            }
+        }
+    }
+}

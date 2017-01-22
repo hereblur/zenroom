@@ -9,8 +9,44 @@ angular.module('ZenApplication')
           roomtype: '=roomtype',
           bookingGetter: '=bookingGetter'
         },
-        controller: ['$scope', function($scope){
-            $scope.booking = $scope.bookingGetter($scope.day, $scope.roomtype)
+        controller: ['$scope', 'BookingsFactory', 'Roomtypes', function($scope, BookingsFactory, Roomtypes){
+            $scope.booking = $scope.bookingGetter($scope.day, $scope.roomtype);
+            $scope.roomtypeData = Roomtypes.get($scope.booking.roomtypeId);
+            $scope.available = $scope.booking.inventory;
+
+            $scope.saveBooking = function(field){
+                return function(value, saveResultCallback){
+                  var updater = {};
+                  switch(field){
+                    case 'inventory' :
+                                      var v = +value;
+                                      if(isNaN(v) || v<0 || v%1>0)
+                                        return saveResultCallback("Invalid number");
+
+                                      updater['inventory'] = v
+                                      break;
+                    case 'price'    :
+                                      var v = +value;
+                                      if(isNaN(v) || v<0)
+                                        return saveResultCallback("Invalid amount");
+
+                                      updater['price'] = v
+                                      break;
+                  }
+
+                  BookingsFactory.save({date: $scope.booking.date, roomtype: $scope.booking.roomtypeId}, updater, function(data){
+                      if(data.error){
+                          return saveResultCallback(data.error)
+                      }
+
+                      $scope.booking.inventory = data.inventory;
+                      $scope.booking.price = data.price;
+                      return saveResultCallback( true )
+                  }, function(response) {
+                      return saveResultCallback( response.data.error || response.statusText )
+                  })
+                }
+            }
         }]
     }
 }])

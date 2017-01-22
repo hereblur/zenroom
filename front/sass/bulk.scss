@@ -1,0 +1,89 @@
+@import "_var";
+
+.bulk-form{
+  padding: 1rem;
+  background: $lightgrey;
+  margin-bottom: 1rem;
+
+  form.bulk-editor{
+
+      .days-presets label{
+        font-weight: bold;
+      }
+
+
+      label{
+        white-space: nowrap;
+      }
+
+      label.input-inline{
+          input{
+            @media screen and (min-width: 40em){
+              display: inline-block;
+            }
+            margin-bottom: 0px;
+          }
+      }
+      label.input-label{
+          background: white;
+          width:100%;
+          position: relative;
+          z-index: 2;
+          padding: 0.5rem 0 0.5rem 0.5rem;
+          color: grey;
+          font-size: 0.8em;
+          margin-bottom: 0.5rem;
+          input, select, .input{
+              background: transparent;
+              position: absolute;
+              left: 0px;
+              top:0px;
+              padding-left: 50px;
+              z-index: 1;
+              color: black;
+          }
+      }
+
+  }
+
+  .errors{
+    color: red;
+    padding: 10px;
+    border: 1px solid #770000;
+    background: #FFe8e8;
+
+    ul{
+      padding: 10px;
+      font-size: 0.9em;
+    }
+    h5{ color: inherit;}
+
+  }
+
+  .saved-dialog{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left:0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    background: rgba(255, 255, 255, 0.7);
+    z-index: 1000;
+
+    &>div{
+      width: 300px;
+      height: 4em;
+      line-height: 4em;
+      background: white;
+      border: 1px solid black;
+      color: black;
+      text-align: center;
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 150px;
+    }
+  }
+}

@@ -47,7 +47,6 @@ abstract class TestCase extends Laravel\Lumen\Testing\TestCase
           return $this->fail('Invalid JSON was returned from the route. Perhaps an exception was thrown?');
       }
 
-
       foreach ($actual as $row) {
 
         $actual_row = json_encode(array_sort_recursive(
@@ -69,8 +68,6 @@ abstract class TestCase extends Laravel\Lumen\Testing\TestCase
           $found,
           ($negate ? 'Found unexpected' : 'Unable to find')." JSON fragment [".json_encode($data)."] within [".$this->response->getContent()."]."
       );
-
-
 
       return $this;
     }

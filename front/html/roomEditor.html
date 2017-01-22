@@ -1,4 +1,4 @@
 <DIV ng-class="{'disabled':!day.enabled}" >
-    <a href class="occupied">{{booking.occupied}}</a>
-    <a href class="price">{{booking.price | currency: ''}}</a>
+    <pop-edit class="occupied" pop-value="available" pop-save="saveBooking('inventory', booking.occupied)"></pop-edit>
+    <pop-edit class="price"    pop-value="booking.price"    pop-save="saveBooking('price'   , booking.price)"   ></pop-edit>
 </DIV>

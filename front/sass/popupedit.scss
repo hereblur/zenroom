@@ -1,0 +1,101 @@
+@import "_var";
+
+pop-edit{
+  display: block;
+
+  a{  display: block;
+      height: 2em;
+      padding: 2px;
+
+      &:hover{
+          background: lighten($blue, 45%);
+      }
+
+  }
+
+  &.occupied a{
+      color: $blue;
+      text-align: center;
+      .inventory{
+          color: $grey;
+      }
+      border-bottom: 1px dashed $blue;
+  }
+  &.price a{
+      color: red;
+      text-align: right;
+      border-bottom: 1px dashed red;
+  }
+  position: relative;
+
+  .popup-editor{
+    display: none;
+    position: absolute;
+    top: 0px;
+    bottom:10px;
+    left: 10px;
+    z-index: 10;
+    &.active{
+      display: block;
+    }
+    .form{
+      position: relative;
+      width: 180px;
+      background: $grey;
+      vertical-align: middle;
+      padding: 5px;
+
+      box-shadow: 5px 5px 14px -2px rgba(148,148,148,1);
+      .error{
+        color: red;
+      }
+      .saved{
+        color: #007600;
+      }
+
+      input{
+        width: 100px;
+        display: inline-block;
+        vertical-align: middle;
+        margin-bottom: 0;
+      }
+      .button{
+
+        display: inline-block;
+        padding: 5px;
+        vertical-align: middle;
+        margin-bottom: 0;
+
+        &.save{
+          width: 40px;
+          border: none;
+          &:after{
+            content: "SAVE";
+            color: white;
+            font-size: .7em;
+          }
+          &.disabled{
+            background: darken($grey, 10%);
+
+          }
+        }
+
+        &.close{
+          width: 20px;
+          background: none;
+          border: none;
+          padding-top: 0px;
+          &:after{
+            content: "+";
+            font-weight: bold;
+            font-size: 1.5em;
+            color: white;
+            transform: rotate(45deg);
+            display: block;
+          }
+        }
+      }
+    }
+  }
+
+}

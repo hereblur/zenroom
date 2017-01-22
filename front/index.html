@@ -5,40 +5,100 @@
     <title>Zenroom</title>
     <link rel="stylesheet" href="bower_components/foundation/css/normalize.css">
     <link rel="stylesheet" href="bower_components/foundation/css/foundation.css">
-    <link rel="stylesheet" href="css/main.css?">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/bulk.css">
+    <link rel="stylesheet" href="css/calendar.css">
+    <link rel="stylesheet" href="css/popupedit.css">
 </head>
 
 <body ng-controller="MainController">
+
+
     <div class="container" ng-if="AppReady()">
 
-        <div class="row" ng-controller="BulkEditController">
+        <div class="row bulk-form" ng-controller="BulkEditController">
             <form name="bulkForm" class="bulk-editor">
-                Bulk Operation
+                <H2>Bulk Operation</H2>
                 <div class="row">
                     <div class="small-6 medium-3 columns">
-                      <label>Room type:
-                          <SELECT ng-options="room.id as room.type for room in roomtypes" name="roomtype" ng-model="bulkFilter.roomtype"></SELECT>
+                      <div><H4>Room type:</H4></div>
+                      <label class="input-label">Type:
+                          <SELECT ng-options="room.id as room.type for room in roomtypes" name="roomtype" ng-model="roomtype"></SELECT>
                       </label>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="small-12 medium-3 columns">
-                        <label>Select Days:</label>
+                    <div class="small-12 medium-4 large-3 columns">
+                        <div><H4>Select Days:</H4></div>
                         <div class="small-6 medium-12 columns">
-                            From: <input type="text">
+                          <label class="input-label">
+                            From: <input type="date" name="start_date" ng-model="startDate" required>
+                          </label>
                         </div>
                         <div class="small-6 medium-12 columns">
-                            To: <input type="text">
+                          <label class="input-label">
+                            To: <input type="date" name="end_date" ng-model="endDate" required after="startDate">
+                          </label>
                         </div>
                     </div>
-                </div>
+                    <div class="small-12 medium-8 large-9 columns">
+                        <div><H4>Refine Days:</H4></div>
+                        <div class="small-12 medium-3 large-3 columns">
+                          <div class="row days-presets">
+                            <label class="small-4 medium-12 columns"><input type="checkbox" ng-change="presetSelected('all')" ng-model="preset.all" name="preset"> <span><span class="show-for-large-up">All </span></span>Days</label>
+                            <label class="small-4 medium-12 columns"><input type="checkbox" ng-change="presetSelected('wd')"  ng-model="preset.wd" name="preset" > <span><span class="show-for-large-up">All </span></span>Weekdays</label>
+                            <label class="small-4 medium-12 columns"><input type="checkbox" ng-change="presetSelected('we')"  ng-model="preset.we" name="preset" > <span><span class="show-for-large-up">All </span></span>Weekends</label>
+                          </div>
+                        </div>
+                        <div class="small-4 medium-3 large-3 columns">
+                          <label><input ng-model="selectedDays[1]" name="isMon" indeterminate="indeterminate" ng-change="daySelected(1)" type="checkbox"> Mon<span><span class="show-for-medium-up">day</span></span></label>
+                          <label><input ng-model="selectedDays[2]" name="isTue" indeterminate="indeterminate" ng-change="daySelected(2)" type="checkbox"> Tue<span><span class="show-for-medium-up">sday</span></span></label>
+                          <label><input ng-model="selectedDays[3]" name="isWed" indeterminate="indeterminate" ng-change="daySelected(3)" type="checkbox"> Wed<span><span class="show-for-medium-up">nesday</span></span></label>
+                        </div>
+                        <div class="small-4 medium-3 large-3 columns">
+                          <label><input ng-model="selectedDays[4]" name="isThu" indeterminate="indeterminate" ng-change="daySelected(4)" type="checkbox"> Thu<span><span class="show-for-medium-up">rsday</span></span></label>
+                          <label><input ng-model="selectedDays[5]" name="isFri" indeterminate="indeterminate" ng-change="daySelected(5)" type="checkbox"> Fri<span><span class="show-for-medium-up">day</span></span></label>
+                          <label><input ng-model="selectedDays[6]" name="isSat" indeterminate="indeterminate" ng-change="daySelected(6)" type="checkbox"> Sat<span><span class="show-for-medium-up">urday</span></span></label>
+                        </div>
+                        <div class="small-4 medium-3 large-3 columns">
+                          <label><input ng-model="selectedDays[0]" name="isSun" indeterminate="indeterminate" ng-change="daySelected(0)" type="checkbox"> Sun<span><span class="show-for-medium-up">day</span></span></label>
+                        </div>
 
+                    </div>
+                    <div></div>
+                </div>
+                <div class="row">
+                    <div class="small-12 columns">
+                      <div class="small-11 medium-5 large-3 columns">
+                          <div><H4>Bulk update:</H4></div>
+                          <label class="input-inline"><input type="checkbox" ng-model="enableNewPrice">Change price to: <input type="text" name="New_price" ng-model="newPrice" ng-disabled="!enableNewPrice" ng-required="enableNewPrice" ng-valid-price="enableNewPrice" ></label><br>
+                          <label class="input-inline"><input type="checkbox" ng-model="enableNewAvail">Change availability to: <input type="number" name="Availability" ng-disabled="!enableNewAvail" ng-model="newAvailability" ng-required="enableNewAvail" ></label><br>
+                      </div>
+                    </div>
+                    <div class="small-12 columns">
+                      <div class="small-12 columns">
+                        <button type="button" class="secondary" ng-click="reset()">Cancel</button>
+                        <button type="button" class="primary" ng-click="bulkSave()" ng-disabled="(!enableNewPrice&&!enableNewAvail)">Save</button>
+                      </div>
+                    </div>
+                    <div class="small-12 columns errors" ng-show="bulkForm.$invalid && submitted">
+                        <H5>Errors:</H5>
+                        <ul class="error" ng-repeat="(key, fields) in bulkForm.$error">
+                            <li ng-repeat="error in fields">{{key | errorMessage}} : {{error.$name | errorMessage}}</li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div ng-show="saved" class="saved-dialog" ng-click="saved=false">
+                    <div>{{saved}}</div>
+                </div>
             </form>
         </div>
 
         <div ng-controller="CalendarController">
 
             <div class="row calendar-header" ng-init="loadCalendar()">
+                <H2>Calendar View</H2>
                 <button  class="small-2 medium-3 columns button small" ng-click="goPrevMonth()"><span>&lt;&lt;<span class="hide-for-small-only"> PREV</span></span></button>
                 <div class="small-8 medium-6 columns button small">
                     {{viewMonth.format('MMMM YYYY')}}
@@ -76,12 +136,10 @@
                 </div>
             </div>
 
-            <div class="medium-12 large-6 columns" ng-repeat="day in calendar">
-                <day-block day="day" booking-getter="getBooking" ng-repeat="day in week" class="day-of-week columns" ></day-block>
-            </div>
+
             <div></div>
         </div>
-    </div>
+    </div-->
     <script src="bower_components/moment/min/moment.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
@@ -92,6 +150,8 @@
     <script src="js/CalendarController.js"></script>
     <script src="js/BulkEditController.js"></script>
     <script src="js/RoomEditorDirective.js"></script>
+    <script src="js/PopEditDirective.js"></script>
+    <script src="js/ValidatorDirective.js"></script>
 
 </body>
 </html>

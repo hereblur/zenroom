@@ -9,7 +9,7 @@ class RoomtypesController extends Controller
 {
     public function index()
     {
-        return Roomtypes::select("id", "type", "baseprice")->get();
+        return Roomtypes::select("id", "type", "baseprice", "inventory")->get();
     }
 
     public function create(Request $request)
