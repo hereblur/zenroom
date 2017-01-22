@@ -96,6 +96,11 @@ class BookingsController extends Controller
 
         $startDate = strtotime($request->input("start"));
         $endDate = strtotime($request->input("end"));
+
+        if ($endDate < $startDate) {
+            return response()->json(['error' => 'Invalid date range.', 'code' => '500'], 500);
+        }
+
         $weekdays = $request->input("weekdays");
 
         $inventory = false;

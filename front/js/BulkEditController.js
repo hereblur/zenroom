@@ -64,6 +64,8 @@ angular.module('ZenApplication')
               $scope.saved = false;
           }, 3000)
 
+      }, function(response) {
+          $scope.extraError = ( response.data.error || response.statusText )
       })
 
     }
@@ -74,5 +76,6 @@ angular.module('ZenApplication')
       $scope.newAvailability = "";
       $scope.enableNewPrice = "";
       $scope.enableNewAvail = "";
+      $scope.extraError = false;
     }
 }]);

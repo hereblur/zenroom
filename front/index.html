@@ -81,11 +81,16 @@
                         <button type="button" class="primary" ng-click="bulkSave()" ng-disabled="(!enableNewPrice&&!enableNewAvail)">Save</button>
                       </div>
                     </div>
-                    <div class="small-12 columns errors" ng-show="bulkForm.$invalid && submitted">
+                    <div class="small-12 columns errors" ng-show="(bulkForm.$invalid||extraError) && submitted">
                         <H5>Errors:</H5>
                         <ul class="error" ng-repeat="(key, fields) in bulkForm.$error">
                             <li ng-repeat="error in fields">{{key | errorMessage}} : {{error.$name | errorMessage}}</li>
                         </ul>
+                        <ul class="error" ng-if="extraError">
+                          <li>{{extraError}}</li>
+                        </ul>
+
+
                     </div>
 
                 </div>
