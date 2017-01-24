@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Roomtypes;
 use Illuminate\Http\Request;
+use \Exception;
 
 class RoomtypesController extends Controller
 {
@@ -14,63 +15,60 @@ class RoomtypesController extends Controller
 
     public function create(Request $request)
     {
-        $type = $request->input('type');
-        $baseprice = $request->input('baseprice');
+        try{
+            $this->validate($request, [
+                  'type' => 'required',
+                  'baseprice' => 'numeric|min:0',
+            ]);
 
-        if (!$type || $type=="") {
-            return response()->json(['error' => 'Invalid type name.', 'code' => '409'], 409);
+            if (Roomtypes::where("type", $request->input('type'))->first()) {
+                throw new Exception("Duplicated type");
+            }
+
+            $roomType = new Roomtypes;
+            $roomType->type = $request->input('type');
+            $roomType->baseprice = $request->input('baseprice');
+            $roomType->save();
+
+            return $roomType;
+        }catch(Exception $e) {
+            return response()->json(["error" => $e->getMessage()], 500);
         }
-
-        if (!$baseprice || floatval($baseprice)<=0) {
-            return response()->json(['error' => 'Invalid type base price.', 'code' => '409'], 409);
-        }
-
-        if (Roomtypes::where("type", $type)->first()) {
-            return response()->json(['error' => 'Duplicated type.', 'code' => '409'], 409);
-        }
-
-        $roomType = new Roomtypes;
-        $roomType->type = $type;
-        $roomType->baseprice = $baseprice;
-        $roomType->save();
-
-        return $roomType;
     }
 
     public function update(Request $request, $id)
     {
-        $roomType = Roomtypes::find($id);
-        $type = $request->input('type');
-        $baseprice = $request->input('baseprice');
+        try{
+            $this->validate($request, [
+                  'type' => 'sometimes|required',
+                  'baseprice' => 'sometimes|numeric|min:0',
+            ]);
 
-        if (!$roomType) {
-            return response()->json(['error' => 'Not found.', 'code' => '404'], 404);
-        }
-
-        if($request->has('type')){
-            if (Roomtypes::where("type", $type)
-                      ->where("id", "!=", $id)
-                      ->first()) {
-                return response()->json(['error' => 'Duplicated type.', 'code' => '409'], 409);
+            $roomType = Roomtypes::find($id);
+            if (!$roomType) {
+                throw new Exception("Not found");
             }
 
-            if (!$type || $type=="") {
-                return response()->json(['error' => 'Invalid type name.', 'code' => '409'], 409);
+            if($request->has('type')){
+                if (Roomtypes::where("type", $request->input('type'))
+                          ->where("id", "!=", $id)
+                          ->first()) {
+                    throw new Exception("Duplicated type");
+                }
+
+                $roomType->type = $request->input('type');;
             }
 
-            $roomType->type = $type;
-        }
-
-        if($request->has('baseprice')){
-            if (!$baseprice || floatval($baseprice)<=0) {
-                return response()->json(['error' => 'Invalid type base price.', 'code' => '409'], 409);
+            if($request->has('baseprice')){
+                $roomType->baseprice = $request->input('baseprice');
             }
-            $roomType->baseprice = $baseprice;
+
+            $roomType->save();
+
+            return $roomType;
+        }catch(Exception $e) {
+            return response()->json(["error" => $e->getMessage()], 500);
         }
-
-        $roomType->save();
-
-        return $roomType;
     }
   //
 }

@@ -37,25 +37,20 @@ class RoomtypesTest extends TestCase
     public function testRoomtypeCreate()
     {
         $this->put('/api/roomtypes', ["type" => "Double room", "baseprice" => 1000])
-            ->seeJson(['code'=>'409'])
-            ->seeStatusCode(409);
+            ->seeStatusCode(500);
 
         $this->put('/api/roomtypes', ["type" => "Triple room", "baseprice" => -1000])
-            ->seeJson(['code'=>'409'])
-            ->seeStatusCode(409);
+            ->seeStatusCode(500);
 
-        $this->put('/api/roomtypes', ["type" => "Triple room", "baseprice" => 0])
-            ->seeJson(['code'=>'409'])
-            ->seeStatusCode(409);
+        $this->put('/api/roomtypes', ["type" => "Triple room", "baseprice" =>  -1])
+            ->seeStatusCode(500);
 
         $this->put('/api/roomtypes', ["type" => "Triple room"])
-            ->seeJson(['code'=>'409'])
-            ->seeStatusCode(409);
+            ->seeStatusCode(500);
 
         $this->put('/api/roomtypes', ["type" => "Triple room", "baseprice" => 1000])
             ->seeJson(['type'=>'Triple room'])
             ->seeStatusCode(200);
-
 
         $this->get('/api/roomtypes')
             ->seeJson()
@@ -70,16 +65,13 @@ class RoomtypesTest extends TestCase
     public function testRoomtypeUpdate()
     {
         $this->post('/api/roomtypes/1', ["type" => "Double room", "baseprice" => 8000])
-            ->seeJson(['code'=>'409'])
-            ->seeStatusCode(409);
+            ->seeStatusCode(500);
 
         $this->post('/api/roomtypes/1', ["type" => "Triple room", "baseprice" => -1000])
-            ->seeJson(['code'=>'409'])
-            ->seeStatusCode(409);
+            ->seeStatusCode(500);
 
-        $this->post('/api/roomtypes/1', ["type" => "Triple room", "baseprice" => 0])
-            ->seeJson(['code'=>'409'])
-            ->seeStatusCode(409);
+        $this->post('/api/roomtypes/1', ["type" => "Triple room", "baseprice" => -1])
+            ->seeStatusCode(500);
 
         $this->post('/api/roomtypes/1', ["type" => "Triple room"])
             ->seeJson(['type'=>'Triple room'])

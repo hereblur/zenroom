@@ -39,11 +39,11 @@ angular.module('ZenApplication')
                           return saveResultCallback(data.error)
                       }
 
-                      $scope.booking.inventory = data.inventory;
-                      $scope.booking.price = data.price;
+                      $scope.booking.inventory = data[0].inventory;
+                      $scope.booking.price = data[0].price;
                       return saveResultCallback( true )
                   }, function(response) {
-                      return saveResultCallback( response.data.error || response.statusText )
+                      return saveResultCallback( response.data.error || Object.values(response.data)[0].join('<br>') || response.statusText )
                   })
                 }
             }

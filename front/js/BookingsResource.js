@@ -5,8 +5,8 @@ angular.module('ZenApplication')
             '/api/bookings/:yearMonth', {},
             {
                 'query': { method: 'GET', isArray: true, cancellable: true },
-                'save': { method: 'POST', isArray: false, url:  '/api/bookings/:date/:roomtype'},
-                'bulkUpdate': { method: 'POST', isArray: false, url:  '/api/bookings/bulk'}
+                'save': { method: 'POST', isArray: true, url:  '/api/bookings/:date/:roomtype'},
+                'bulkUpdate': { method: 'POST', isArray: true, url:  '/api/bookings/bulk'}
             }
     );
 }]);

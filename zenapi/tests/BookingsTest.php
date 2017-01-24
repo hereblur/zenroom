@@ -66,10 +66,8 @@ class BookingsTest extends TestCase
             ->seeStatusCode(200);
 
         $this->post('/api/bookings/'.date("Y-m-d").'/2', ["inventory" => "-5"])
-            ->seeJson(['code'=>"500"])
             ->seeStatusCode(500);
         $this->post('/api/bookings/'.date("Y-m-d").'/2', ["inventory" => "A1"])
-            ->seeJson(['code'=>"500"])
             ->seeStatusCode(500);
 
 
@@ -85,8 +83,8 @@ class BookingsTest extends TestCase
     public function testBookingsBulk()
     {
 
-        $this->post('/api/bookings/bulk', ["roomtype" => 1, "start" => "2017-01-01", "end" => "2017-01-05", "weekdays" => [1,1,1,1,1,1,1], "price" => 400])
-          ->seeJson(['saved'=>5, 'created'=>5])
+        $this->post('/api/bookings/2017-01-01_2017-01-05/1', ["weekdays" => [1,1,1,1,1,1,1], "price" => 400])
+          ->seeJsonArray()
           ->seeStatusCode(200);
 
         $this->get('/api/bookings/2017-01')->seeStatusCode(200);
@@ -97,8 +95,8 @@ class BookingsTest extends TestCase
         $this->seeRecord(["date"=>"2017-01-04", "roomtypeId" =>	"1", "inventory"=>"5" , "price"=>"400.00"]);
         $this->seeRecord(["date"=>"2017-01-05", "roomtypeId" =>	"1", "inventory"=>"5" , "price"=>"400.00"]);
 
-        $this->post('/api/bookings/bulk', ["roomtype" => 1, "start" => "2017-01-01", "end" => "2017-01-05", "weekdays" => [1,1,1,1,1,1,1], "price" => 600])
-          ->seeJson(['saved'=>5, 'created'=>0])
+        $this->post('/api/bookings/2017-01-01_2017-01-05/1', ["weekdays" => [1,1,1,1,1,1,1], "price" => 600])
+          ->seeJsonArray()
           ->seeStatusCode(200);
 
         $this->get('/api/bookings/2017-01')->seeStatusCode(200);
@@ -109,16 +107,16 @@ class BookingsTest extends TestCase
         $this->seeRecord(["date"=>"2017-01-04", "roomtypeId" =>	"1", "inventory"=>"5" , "price"=>"600.00"]);
         $this->seeRecord(["date"=>"2017-01-05", "roomtypeId" =>	"1", "inventory"=>"5" , "price"=>"600.00"]);
 
-        $this->post('/api/bookings/bulk', ["roomtype" => 1, "start" => "2017-01-01", "end" => "2017-01-16", "weekdays" => [0,1,1,1,1,1,0], "price" => 100])
-            ->seeJson(['saved'=>11])
+        $this->post('/api/bookings/2017-01-01_2017-01-16/1', ["weekdays" => [0,1,1,1,1,1,0], "price" => 100])
+            ->seeJsonArray()
             ->seeStatusCode(200);
 
-        $this->post('/api/bookings/bulk', ["roomtype" => 2, "start" => "2017-01-01", "end" => "2017-01-7", "weekdays" => [1,0,0,1,0,0,1], "inventory" => 10])
-            ->seeJson(['saved'=>3])
+        $this->post('/api/bookings/2017-01-01_2017-01-07/2', ["weekdays" => [1,0,0,1,0,0,1], "inventory" => 10])
+            ->seeJsonArray()
             ->seeStatusCode(200);
 
-        $this->post('/api/bookings/bulk', ["roomtype" => 1, "start" => "2017-01-08", "end" => "2017-01-16", "weekdays" => [1,0,0,1,0,0,1], "inventory" => 15])
-            ->seeJson(['saved'=>4])
+        $this->post('/api/bookings/2017-01-08_2017-01-16/1', ["weekdays" => [1,0,0,1,0,0,1], "inventory" => 15])
+            ->seeJsonArray()
             ->seeStatusCode(200);
 
         $this->get('/api/bookings/2017-01')->seeStatusCode(200);
